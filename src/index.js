@@ -1,14 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import SortIcon from "@material-ui/icons/Sort";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import Card from "@material-ui/core/Card";
+
 import "./index.css";
 
 function Square(props) {
   const style = props.highlight ? { backgroundColor: 'yellow' } : null ;
   return (
       <button
-    className="square"
-    style={style}
-    onClick={props.onClick}
+        className="square"
+        style={style}
+        onClick={props.onClick}
       >
       {props.value}
     </button>
@@ -17,13 +26,14 @@ function Square(props) {
 
 class Board extends React.Component {
   renderSquare(i) {
-    return (<Square
-            key={i}
-            value={this.props.squares[i]}
-            highlight={this.props.highlights.has(i)}
-            onClick={() => this.props.onClick(i)}
-            />
-           );
+    return (
+      <Square
+        key={i}
+        value={this.props.squares[i]}
+        highlight={this.props.highlights.has(i)}
+        onClick={() => this.props.onClick(i)}
+      />
+    );
   }
 
   render() {
@@ -74,6 +84,20 @@ class Game extends React.Component {
     });
   }
 
+  renderSortButton() {
+    const desc = this.state.historyDescending;
+    const style = Object.assign({ transition: "200ms transform" }, desc ? { transform: "scaleY(-1)" } : {});
+    return (
+      <IconButton
+        variant="contained"
+        onClick={() => this.toggleDescending()}
+      >
+        <SortIcon style={style} />
+      </IconButton>
+    );
+  }
+
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -86,32 +110,58 @@ class Game extends React.Component {
 
     const moves = history.map(({ pos }, move) => {
       const desc = move === 0 ? "Go to game start" : `Go to move #${move} (${pos % 3}, ${Math.floor(pos / 3)})`;
-      const style = move === this.state.stepNumber ? { fontWeight: "bold" } : {};
-      return (
-          <li key={move} style={style}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-          </li>
-      );
+      const active = move === this.state.stepNumber;
+      return {
+        desc,
+        active,
+        onClick: (() => this.jumpTo(move))
+      };
     });
+
+
 
     return (
       <div className="game">
         <div className="game-board">
-        <Board
-      squares={current.squares}
-      highlights={new Set(hits.flat())}
-      onClick={(i) => this.handleClick(i)}
-        />
+          <Board
+            squares={current.squares}
+            highlights={new Set(hits.flat())}
+            onClick={(i) => this.handleClick(i)}
+          />
         </div>
         <div className="game-info">
-          <div>{status}</div>
-        <button onClick={() => this.toggleDescending()}>{this.state.historyDescending ? "↓" : "↑"}</button>
-        <ol>{this.state.historyDescending ? moves.reverse() : moves}</ol>
+          <Typography variant="headline">
+            {status}
+          </Typography>
+          {this.renderSortButton()}
+          <MoveList items={this.state.historyDescending ? moves.reverse() : moves}></MoveList>
         </div>
       </div>
     );
   }
 }
+
+function MoveList(props) {
+  const subheader = (
+    <ListSubheader>Move List</ListSubheader>
+  );
+  const items = props.items.map(
+    (item, i) =>
+      <ListItem
+        key={i}
+        selected={item.active}
+        onClick={item.onClick}
+        button
+        dense
+      >{item.desc}</ListItem>
+  );
+  return (
+    <Card>
+      <List subheader={subheader}>{items}</List>
+    </Card>
+  );
+}
+
 
 function calculateWinner(squares) {
   const lines = [
@@ -129,7 +179,6 @@ function calculateWinner(squares) {
     const [a, b, c] = line.map(i => squares[i]);
     return (a !== null && a === b && b === c && c === a);
   });
-  console.log(hits);
   const winner = hits.length > 0 ? squares[hits[0][0]] : null ;
   return { winner, hits };
 }
