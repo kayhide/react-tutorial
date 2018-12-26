@@ -2,9 +2,11 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kayhide.github.io/react-tutorial",
   "dependencies": {
     "@material-ui/core": "^3.7.1",
     "@material-ui/icons": "^3.0.1",
+    "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.1",
     "react": "^16.7.0",
@@ -12,6 +14,8 @@
     "react-scripts": "2.1.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
