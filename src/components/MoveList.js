@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Card from "@material-ui/core/Card";
@@ -46,14 +47,16 @@ class MoveList extends React.Component {
   }
 
   render() {
+    const path = i => i === 0 ? "/" : `/moves/${i}`;
     const items = this.props.items.map(
       (item, i) =>
         <ListItem
           key={i}
           selected={item.active}
-          onClick={() => this.props.onSelected(i)}
           button
           dense
+          component={Link}
+          to={path(i)}
         >{item.desc}</ListItem>
     );
     return (

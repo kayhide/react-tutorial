@@ -1,13 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-import "normalize.css";
+import { Router, Switch, Route } from "react-router-dom";
 
 import Page from "components/Page";
+import history from "./history";
+
+import "normalize.css";
 import "./index.css";
 
 ReactDOM.render(
-  <Page />,
+  <Router history={history}>
+    <Switch>
+      <Route path="/" exact component={Page} />
+      <Route path="/moves/:move" component={Page} />
+    </Switch>
+  </Router>
+  ,
   document.getElementById('root')
 );
 

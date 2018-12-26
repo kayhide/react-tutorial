@@ -1,49 +1,59 @@
 import React from "react";
+import { withRouter, Redirect } from "react-router";
 
+import history from "../../history";
 
 function withGameContainer(Rep) {
-  return class GameContainer extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        history: [{ squares: Array(9).fill(null), winning: { winner: null }}],
-        stepNumber: 0,
-        xIsNext: true
-      };
-    }
+  return withRouter(
+    class GameContainer extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          moves: [{ squares: Array(9).fill(null), winning: { winner: null }}],
+        };
+      }
 
-    handleClick(i) {
-      const history = this.state.history.slice(0, this.state.stepNumber + 1);
-      const current = history[this.state.stepNumber];
-      const squares = current.squares.slice();
-      if (!current.winning.winner && !squares[i]) {
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
-        const winning = calculateWinner(squares);
-        this.setState({
-          history: history.concat([{ squares, pos: i, winning }]),
-          stepNumber: history.length,
-          xIsNext: !this.state.xIsNext});
+      currentStep() {
+        return this.props.match.params.move ? Number(this.props.match.params.move) : 0;
+      }
+
+      nextPlayer() {
+        return (this.currentStep() % 2) === 0 ? 'X' : 'O';
+      }
+
+      handleClick(pos) {
+        const current = this.state.moves[this.currentStep()];
+        if (!current.winning.winner && !current.squares[pos]) {
+          const squares = current.squares.slice();
+          squares[pos] = this.nextPlayer();
+          const winning = calculateWinner(squares);
+          const moves = this.state.moves
+                .slice(0, this.currentStep() + 1)
+                .concat([{ squares, pos, winning }]);
+          this.setState({ moves });
+          history.push(`/moves/${this.currentStep() + 1}`);
+        }
+      }
+
+      render() {
+        if (this.currentStep() >= this.state.moves.length) {
+          return <Redirect to="/" />
+        }
+        return (
+          <Rep
+            game={Object.assign({ stepNumber: this.currentStep(),
+                                  nextPlayer: this.nextPlayer()
+                                },
+                                this.state
+                               )}
+            location={this.props.location}
+            onCellClick={i => this.handleClick(i)}
+            {...this.props}
+          />
+        );
       }
     }
-
-    jumpTo(step) {
-      this.setState({
-        stepNumber: step,
-        xIsNext: (step % 2) === 0
-      });
-    }
-
-    render() {
-      return (
-        <Rep
-          game={this.state}
-          onCellClick={i => this.handleClick(i)}
-          onMoveSelected={i => this.jumpTo(i)}
-          {...this.props}
-        />
-      );
-    }
-  }
+  );
 };
 
 function calculateWinner(squares) {

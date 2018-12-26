@@ -8,17 +8,17 @@ import MoveList from "components/MoveList";
 import withGameContainer from "components/container/GameContainer";
 
 function Game(props) {
-  const { history, stepNumber, xIsNext } = props.game;
-  const current = history[stepNumber];
+  const { moves, stepNumber, nextPlayer } = props.game;
+  const current = moves[stepNumber];
   const { winner, hits } = current.winning;
   const highlights = new Set((hits || []).flat());
 
   const status = winner ?
         `Winner: ${winner}` :
         ( stepNumber === 9 ?
-          "Draw" : `Next player: ${xIsNext ? 'X' : 'O'}`);
+          "Draw" : `Next player: ${nextPlayer}`);
 
-  const moves = history.map(({ pos }, move) => {
+  const items = moves.map(({ pos }, move) => {
     const desc = move === 0 ? "Game Start" : `Move #${move} (${pos % 3}, ${Math.floor(pos / 3)})`;
     const active = move === stepNumber;
     return { desc, active };
@@ -39,16 +39,13 @@ function Game(props) {
               <Board
                 squares={current.squares}
                 highlights={highlights}
-                onClick={i => props.onCellClick(i)}
+                onClick={props.onCellClick}
               />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs>
-          <MoveList
-            items={moves}
-            onSelected={i => props.onMoveSelected(i)}
-          />
+          <MoveList items={items} />
         </Grid>
       </Grid>
     </div>

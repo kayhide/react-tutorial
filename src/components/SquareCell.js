@@ -15,15 +15,20 @@ const styles = {
 
 function SquareCell(props) {
   const { classes } = props;
-  const color = props.highlight ? "secondary" : "primary" ;
+  const variant = props.highlight ? "contained" : "outlined" ;
+  const color = {
+    "": "default",
+    "X": "primary",
+    "O": "secondary"
+  }[props.value]
   return (
     <Button
-      variant="outlined"
       className={classes.button}
+      variant={variant}
       color={color}
       onClick={props.onClick}
     >
-      {props.value}
+      <span>{props.value}</span>
     </Button>
   );
 }
