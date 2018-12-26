@@ -1,73 +1,49 @@
 import React from "react";
 
-import GameView from "components/GameView";
+import Typography from "@material-ui/core/Typography";
 
-class Game extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      history: [{ squares: Array(9).fill(null), winning: { winner: null }}],
-      stepNumber: 0,
-      xIsNext: true
-    };
-  }
+import Board from "components/Board";
+import MoveList from "components/MoveList";
+import withGameContainer from "components/container/GameContainer";
 
-  handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[this.state.stepNumber];
-    const squares = current.squares.slice();
-    if (!current.winning.winner && !squares[i]) {
-      squares[i] = this.state.xIsNext ? 'X' : 'O';
-      const winning = calculateWinner(squares);
-      this.setState({
-        history: history.concat([{ squares, pos: i, winning }]),
-        stepNumber: history.length,
-        xIsNext: !this.state.xIsNext});
-    }
-  }
+function Game(props) {
+  const { history, stepNumber } = props;
+  const current = history[stepNumber];
+  const { winner, hits } = current.winning;
 
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0
-    });
-  }
+  const status = winner ?
+        `Winner: ${winner}` :
+        ( stepNumber === 9 ?
+          "Draw" : `Next player: ${props.xIsNext ? 'X' : 'O'}`);
 
-  render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-
-    return (
-      <GameView
-        history={history}
-        current={current}
-        stepNumber={this.state.stepNumber}
-        winning={current.winning}
-        onCellClick={i => this.handleClick(i)}
-        onMoveSelected={i => this.jumpTo(i)}
-      />
-    );
-  }
-}
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-
-  const hits = lines.filter(line => {
-    const [a, b, c] = line.map(i => squares[i]);
-    return (a !== null && a === b && b === c && c === a);
+  const moves = history.map(({ pos }, move) => {
+    const desc = move === 0 ? "Go to game start" : `Go to move #${move} (${pos % 3}, ${Math.floor(pos / 3)})`;
+    const active = move === stepNumber;
+    return { desc, active };
   });
-  const winner = hits.length > 0 ? squares[hits[0][0]] : null ;
-  return { winner, hits };
-}
 
-export default Game;
+
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board
+          squares={current.squares}
+          highlights={new Set((hits || []).flat())}
+          onClick={i => props.onCellClick(i)}
+        />
+      </div>
+      <div className="game-info">
+        <Typography variant="headline">
+          {status}
+        </Typography>
+        <MoveList
+          items={moves}
+          onSelected={i => props.onMoveSelected(i)}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default withGameContainer(Game);
