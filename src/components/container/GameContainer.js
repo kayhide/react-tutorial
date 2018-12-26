@@ -36,8 +36,7 @@ function withGameContainer(Rep) {
     render() {
       return (
         <Rep
-          history={this.state.history}
-          stepNumber={this.state.stepNumber}
+          game={this.state}
           onCellClick={i => this.handleClick(i)}
           onMoveSelected={i => this.jumpTo(i)}
           {...this.props}

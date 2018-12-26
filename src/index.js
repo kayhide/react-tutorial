@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Game from "components/Game";
+import "normalize.css";
 
+import Page from "components/Page";
 import "./index.css";
 
 ReactDOM.render(
-  <Game />,
+  <Page />,
   document.getElementById('root')
 );
 

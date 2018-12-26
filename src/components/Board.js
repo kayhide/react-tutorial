@@ -1,28 +1,33 @@
+import times from "lodash/times";
+import range from "lodash/range";
 import React from "react";
+
+import Grid from '@material-ui/core/Grid';
 
 import SquareCell from "components/SquareCell";
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <SquareCell
-        key={i}
-        value={this.props.squares[i]}
-        highlight={this.props.highlights.has(i)}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-
-  render() {
-    const row = (j) => {
-      const cells = Array.from(Array(3).keys()).map(i => this.renderSquare(j * 3 + i));
-      return (<div key={`row-${j}`} className="board-row">{cells}</div>);
-    };
-
-    const rows = Array.from(Array(3).keys()).map(j => row(j));
-    return (<div>{rows}</div>);
-  }
-}
+function Board(props) {
+  return (
+    <div>
+      {
+        times(3).map(j => (
+          <Grid key={`row-${j}`} container spacing={8}>
+            {
+              range(j * 3, j * 3 + 3).map(x => (
+                <Grid key={x} item xs>
+                  <SquareCell
+                    value={props.squares[x]}
+                    highlight={props.highlights.has(x)}
+                    onClick={() => props.onClick(x)}
+                  />
+                </Grid>
+              ))
+            }
+          </Grid>
+        ))
+      }
+    </div>
+  );
+};
 
 export default Board;
