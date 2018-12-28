@@ -11,7 +11,7 @@ function Board(props) {
     <div>
       {
         times(3).map(j => (
-          <Grid key={`row-${j}`} container spacing={8}>
+          <Grid key={`row-${j}`} container>
             {
               range(j * 3, j * 3 + 3).map(x => (
                 <Grid key={x} item xs>

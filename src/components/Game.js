@@ -36,7 +36,7 @@ function Game(props) {
             {status}
           </Typography>
         </Grid>
-        <Grid item xs className="game-board">
+        <Grid item xs={12} sm className="game-board">
           <Grid container direction="row" justify="center" alignItems="center">
             <Grid item>
               <Board
@@ -47,7 +47,7 @@ function Game(props) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs>
+        <Grid item xs sm>
           <MoveList items={items} />
         </Grid>
       </Grid>
