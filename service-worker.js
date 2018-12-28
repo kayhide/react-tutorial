@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "https://kayhide.github.io/react-tutorial/precache-manifest.3672735d4dc862ba487e027dd13c2d61.js"
+  "/react-tutorial/precache-manifest.9b898375d14267a5a8dce6d61e6e7dc0.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("https://kayhide.github.io/react-tutorial/index.html", {
+workbox.routing.registerNavigationRoute("/react-tutorial/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
