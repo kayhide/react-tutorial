@@ -1,15 +1,15 @@
 {
-  "main.css": "/react-tutorial/static/css/main.77058351.chunk.css",
-  "main.js": "/react-tutorial/static/js/main.03069ce4.chunk.js",
-  "main.js.map": "/react-tutorial/static/js/main.03069ce4.chunk.js.map",
-  "static/css/1.78480d47.chunk.css": "/react-tutorial/static/css/1.78480d47.chunk.css",
-  "static/js/1.17bd7acc.chunk.js": "/react-tutorial/static/js/1.17bd7acc.chunk.js",
-  "static/js/1.17bd7acc.chunk.js.map": "/react-tutorial/static/js/1.17bd7acc.chunk.js.map",
-  "runtime~main.js": "/react-tutorial/static/js/runtime~main.d6d0aa42.js",
-  "runtime~main.js.map": "/react-tutorial/static/js/runtime~main.d6d0aa42.js.map",
-  "static/css/main.77058351.chunk.css.map": "/react-tutorial/static/css/main.77058351.chunk.css.map",
-  "static/css/1.78480d47.chunk.css.map": "/react-tutorial/static/css/1.78480d47.chunk.css.map",
-  "index.html": "/react-tutorial/index.html",
-  "precache-manifest.aff9c63d678477b1b966679cca0f30a4.js": "/react-tutorial/precache-manifest.aff9c63d678477b1b966679cca0f30a4.js",
-  "service-worker.js": "/react-tutorial/service-worker.js"
+  "main.css": "https://kayhide.github.io/react-tutorial/static/css/main.77058351.chunk.css",
+  "main.js": "https://kayhide.github.io/react-tutorial/static/js/main.6165f69b.chunk.js",
+  "main.js.map": "https://kayhide.github.io/react-tutorial/static/js/main.6165f69b.chunk.js.map",
+  "static/css/1.78480d47.chunk.css": "https://kayhide.github.io/react-tutorial/static/css/1.78480d47.chunk.css",
+  "static/js/1.17bd7acc.chunk.js": "https://kayhide.github.io/react-tutorial/static/js/1.17bd7acc.chunk.js",
+  "static/js/1.17bd7acc.chunk.js.map": "https://kayhide.github.io/react-tutorial/static/js/1.17bd7acc.chunk.js.map",
+  "runtime~main.js": "https://kayhide.github.io/react-tutorial/static/js/runtime~main.b1ac05e3.js",
+  "runtime~main.js.map": "https://kayhide.github.io/react-tutorial/static/js/runtime~main.b1ac05e3.js.map",
+  "static/css/main.77058351.chunk.css.map": "https://kayhide.github.io/react-tutorial/static/css/main.77058351.chunk.css.map",
+  "static/css/1.78480d47.chunk.css.map": "https://kayhide.github.io/react-tutorial/static/css/1.78480d47.chunk.css.map",
+  "index.html": "https://kayhide.github.io/react-tutorial/index.html",
+  "precache-manifest.0ba871b2dede0370ddfc124c41aa4955.js": "https://kayhide.github.io/react-tutorial/precache-manifest.0ba871b2dede0370ddfc124c41aa4955.js",
+  "service-worker.js": "https://kayhide.github.io/react-tutorial/service-worker.js"
 }
