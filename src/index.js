@@ -1,20 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Switch, Route } from "react-router-dom";
+import { Router } from "react-router-dom";
+import { Provider } from "react-redux";
 
-import Page from "components/Page";
+import App from "components/App";
 import history from "./history";
+import store from "./store";
 
 import "normalize.css";
 import "./index.css";
 
 ReactDOM.render(
-  <Router history={history}>
-    <Switch>
-      <Route path="/" exact component={Page} />
-      <Route path="/moves/:move" component={Page} />
-    </Switch>
-  </Router>
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>
   ,
   document.getElementById('root')
 );
